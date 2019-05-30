@@ -1,6 +1,7 @@
 <?php
 $winner = 'n';
 $box = array('','','','','','','','','');
+$result = 'n/a';
 if (isset($_POST["submitbtn"]))
 {
 	$box[0] = $_POST["box0"];
@@ -24,7 +25,6 @@ if (isset($_POST["submitbtn"]))
 		($box[2] == 'x' && $box[5] == 'x' && $box[8] == 'x'))
 	{
 		$winner = 'x';
-		print("X wins");
 	}
 	
 	$blank = 0;
@@ -38,9 +38,9 @@ if (isset($_POST["submitbtn"]))
 	
 	if ($blank == 1 && $winner == 'n')
 	{
-		$i = rand() % 8;
+		$i = rand() % 9;
 		
-		while ($box[$i] != '')
+		while($box[$i] != '')
 		{
 			$i = rand() % 8;
 		}
@@ -57,51 +57,106 @@ if (isset($_POST["submitbtn"]))
 			($box[2] == 'o' && $box[5] == 'o' && $box[8] == 'o'))
 		{
 			$winner = 'o';
-			print("O wins");
 		}
 	}
-	
 	else if ($winner == 'n')
 	{
 		$winner = 't';
-		print("Tied game");
+		
 	}
 }
 ?>
 <html>
 <head>
-<title>TicTacToe</title>
+<title>Tic Tac Toe</title>
 <style type="text/css">
+body
+{
+	padding: 20px;
+}
+form
+{
+	margin: 0 auto;
+	width: 300px;
+}
 #box
 {
-	background-color : #99FFCC;
-	border: 1px solid #008000;
+	background-color: #F6FF5E;
+	border: 3px solid #F2FF00;
 	width: 100px;
 	height: 100px;
-	font-size: 66px;
+	font-size: 100px;
 	text-align: center;
 }
+#go
+{
+	width: 300px;
+	font-family: 'Comic Sans MS';
+	font-size: 40px;
+}
+#new
+{
+	width: 300px;
+	font-family: 'Comic Sans MS';
+	font-size: 40px;
+}
+p
+{
+	color: #FFFFFF;
+	font-size: 100px;
+	text-align: center;
+}
+p2
+{
+	color: #FF0000;
+	font-size: 100px;
+	text-align: center;
+}
+</style>
 </head>
-<body bgcolor="blue">
-<form name="tictactoe" method="post" action="index.php">
+<body bgcolor="black">
+<form name="tictactoe" method="post" action="game.php">
 <?php
 for ($i=0; $i<=8; $i++)
 {
-	printf('<input type="text" name="box%s" value="%s">', $i, $box[$i]);
+	printf('<input type="text" name="box%s" value="%s" id="box">', $i, $box[$i]);
 	
-	if ($i == 2 || $i == 5 || $8 == 8)
+	if ($i == 2 || $i == 5 || $i == 8)
 	{
 		print('<br>');
 	}
 }
+
+print('<br>');
+
 if ($winner == 'n')
 {
-	print('<input type="submit" name="submitbtn" value="Go">');
+	print('<input type="submit" name="submitbtn" value="Go" id="go">');
 }
 else
 {
-	print('<input type="button" name="newgame" value="Play Again" 
-			onclick="window.location.href=\'index.php\'">');
+	print('<input type="button" name="newgame" value="Play Again" id="new"
+			onclick="window.location.href=\'game.php\'">');
+			
+	if ($winner == 'x')
+	{
+		printf('<p>X Wins!</p>');
+	}
+	
+	else if ($winner == 'o')
+	{
+		printf('<p>O Wins!</p>');
+	}
+	
+	else if ($winner == 't')
+	{
+		printf('<p>Tied Game...</p>');
+	}
+	
+	else
+	{
+		printf('<p2>Game error...</p2>');
+	}
 }
 ?>
 </form>

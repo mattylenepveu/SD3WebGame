@@ -42,7 +42,7 @@ if (isset($_POST["submitbtn"]))
 		
 		while($box[$i] != '')
 		{
-			$i = rand() % 8;
+			$i = rand() % 9;
 		}
 		
 		$box[$i] = 'o';
@@ -77,7 +77,7 @@ body
 form
 {
 	margin: 0 auto;
-	width: 300px;
+	width: 350px;
 }
 #box
 {
@@ -90,13 +90,13 @@ form
 }
 #go
 {
-	width: 300px;
+	width: 350px;
 	font-family: 'Comic Sans MS';
 	font-size: 40px;
 }
 #new
 {
-	width: 300px;
+	width: 350px;
 	font-family: 'Comic Sans MS';
 	font-size: 40px;
 }
@@ -114,9 +114,15 @@ p2
 }
 </style>
 </head>
-<body bgcolor="black">
-<form name="tictactoe" method="post" action="game.php">
+<body bgcolor=#FFFFFF>
+<form name="tictactoe" method="post" action="index.php">
 <?php
+
+//session_start(); // session start
+$getvalue = $_SESSION['username']; // session get
+//echo $getvalue;
+
+
 for ($i=0; $i<=8; $i++)
 {
 	printf('<input type="text" name="box%s" value="%s" id="box">', $i, $box[$i]);
@@ -129,14 +135,89 @@ for ($i=0; $i<=8; $i++)
 
 print('<br>');
 
+// continue game
 if ($winner == 'n')
 {
 	print('<input type="submit" name="submitbtn" value="Go" id="go">');
 }
+// end game
 else
-{
+{	
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname="loginsystem";
+	//create connection
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	
+	//check connection
+	if ($conn->connect_error) 
+	{
+		die("Connection failed: " . $conn->connect_error);
+	}
+	
+	echo "Connected successfully\n";
+	
+	$sql = "SELECT idUsers FROM users WHERE uidUsers='$getvalue'";
+	$result = $conn->query($sql);
+	
+	if ($result->num_rows > 0) 
+	{
+		// output data of each row
+		while($row = $result->fetch_assoc()) 
+		{
+			echo "id: " . $row['idUsers']. "<br>";
+			$idUsers = $row['idUsers'];
+		}
+	} 
+	else 
+	{
+		echo "0 results";
+	}
+	
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_errno) 
+	{
+		printf("Connect failed: %s\n", $con->connect_error);
+		exit();
+	}
+	
+	if ($result = $conn->query($sql)) 
+	{
+		// $result is an object and can be used to fetch row here
+	}
+	else 
+	{
+		printf("Query failed: %s\n", $conn->error);
+	}
+	
+	
+	
+	$sql = "SELECT gamesPlayed FROM results WHERE idUsers='$idUsers'";
+	$result = $conn->query($sql);
+	
+	if ($result->num_rows > 0) 
+	{
+		// output data of each row
+		while($row = $result->fetch_assoc()) 
+		{
+			echo "gamesPlayed: " . $row['gamesPlayed']. "<br>";
+			$gamesPlayed = $row['gamesPlayed'];
+		}
+	} 
+	
+	if ($gamesPlayed < 0)
+	{
+		$sql = "INSERT INTO results(idUsers, gamesPlayed) VALUES ('$idUsers', 0)";
+		printf("why");
+	}
+	
+	$sql = "INSERT INTO results(gamesPlayed) VALUES ($gamesPlayed++)";
+	
+	$conn->close();
+	
 	print('<input type="button" name="newgame" value="Play Again" id="new"
-			onclick="window.location.href=\'game.php\'">');
+			onclick="window.location.href=\'index.php\'">');
 			
 	if ($winner == 'x')
 	{

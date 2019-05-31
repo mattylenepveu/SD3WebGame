@@ -43,7 +43,9 @@ if (isset($_POST['login-submit']))
 					session_start();
 					$_SESSION['userId'] = $row['idUsers'];
 					$_SESSION['userUid'] = $row['uidUsers'];
-					
+					include("global.php");
+					$username = $mailuid;
+					$_SESSION['username']=$username ; // Session Set
 					header("Location: ../index.php?login=success");
 					exit();
 				}

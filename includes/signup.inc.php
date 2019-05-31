@@ -82,13 +82,15 @@ if (isset($_POST['signup-submit']))
 					mysqli_stmt_execute($stmt);
 
 					header("Location: ../signup.php?signup=success");
+					
+					
 		
 					exit();
 				}
 			}
 		}
 	}
-
+	
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
 

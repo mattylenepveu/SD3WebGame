@@ -38,9 +38,9 @@
 		  }
 	  }
 	  else if (isset($_GET["signup"]))
-        {
-            echo '<p>Signup successful!</p>';
-        }
+      {
+          echo '<p>Signup successful!</p>';
+      }
   ?>
   <form class="form-signup" action="includes/signup.inc.php" method="post">
 	  <input type="text" name="uid" placeholder="Username">

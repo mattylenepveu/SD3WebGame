@@ -9,33 +9,37 @@
 		<meta name="description" content="This is an example of a meta description. This will often show up in search results.">
 		<meta name=viewport content="width=device-width, initial-scale=1">
 		<title></title>
-		<!--<link rel=stylesheet" href="style.css">-->
+		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
-		<header>
-			<nav>
-				<ul>
-					<li><a href="index.php">Home</a></li>
-					<li><a href="#">Game</a></li>
-				</ul>
-				<div>
+		<div class="top">
+			<div class="inner-top">
+				<div class="logo-container">
+					<img src="images/logo.png" alt="logo">
+				</div>
+				<ul class="login-container">
+					<!--<a><li>Home</li></a>
+					<a><li>About</li></a>
+					<a><li>Portfolio</li></a>
+					<a><li>Contact</li></a>-->
 					<?php
 					if (isset($_SESSION['userId']))
 					{
 						echo '<form action="includes/logout.inc.php" method="post">
-						<button type="submit" name="logout-submit">Logout</button>
+						<a><button type="submit" name="logout-submit">Logout</button></a>
 						</form>';
 					}
 					else
 					{
 						echo '<form action="includes/login.inc.php" method="post">
-						<input type="text" name="mailuid" placeholder="Username/E-mail...">
-						<input type="password" name="pwd" placeholder="Password...">
-						<button type="submit" name="login-submit">Login</button>
-						</form>
-						<a href="signup.php">Signup</a>';
+						<a><input type="text" name="mailuid" placeholder="Username/E-mail"></a>
+						<a><input type="password" name="pwd" placeholder="Password"></a>
+						<a><button type="submit" name="login-submit">Login</button></a>
+						</form>';
 					}
 					?>
-				</div>
-			</nav>
-		</header>
+				</ul>
+			</div>
+		</div>
+	<!--<a><li "href="signup.php">Signup</a>-->
+			

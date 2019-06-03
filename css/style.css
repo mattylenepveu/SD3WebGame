@@ -1,0 +1,67 @@
+body
+{
+	margin: 0px;
+}
+
+.top
+{
+	float: top;
+	width: 100%;
+	height: 75px;
+	display: block;
+	background-color: #DBDBDB;
+}
+
+.inner-top
+{
+	width: 1000px;
+	height: 100%;
+	display: block;
+	margin: 0 auto;
+}
+
+.logo-container
+{
+	height: 100%;
+	display: table;
+	float: left;
+}
+
+.logo-container img
+{
+	height: 100%;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+ul
+{
+	margin-block-start: 0em;
+	margin-block-end: 0em;
+}
+
+.login-container
+{
+	float: right;
+	height: 100%;
+}
+
+.login-container form
+{
+	height: 100%;
+	display: table;
+	float: left;
+	padding: 0px 40px;
+}
+
+.login-container form:last-child
+{
+	padding-right: 0;
+}
+
+.login-container form a
+{
+	height: 100%;
+	display: table-cell;
+	vertical-align: middle;
+}

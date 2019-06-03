@@ -109,19 +109,15 @@ p
 p2
 {
 	color: #FF0000;
-	font-size: 100px;
+	font-size: 10px;
 	text-align: center;
 }
 </style>
 </head>
-<body bgcolor=#FFFFFF>
+<body bgcolor=#101010>
 <form name="tictactoe" method="post" action="index.php">
 <?php
-
-//session_start(); // session start
-$getvalue = $_SESSION['username']; // session get
-//echo $getvalue;
-
+$getvalue = $_SESSION['username'];
 
 for ($i=0; $i<=8; $i++)
 {
@@ -147,6 +143,7 @@ else
 	$username = "root";
 	$password = "";
 	$dbname="loginsystem";
+	
 	//create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	
@@ -166,34 +163,23 @@ else
 		// output data of each row
 		while($row = $result->fetch_assoc()) 
 		{
-			echo "id: " . $row['idUsers']. "<br>";
+			echo "<p2>id: " . $row['idUsers']. "<br></p2>";
 			$idUsers = $row['idUsers'];
 		}
 	} 
 	else 
 	{
-		echo "0 results";
+		echo "<p2>0 results<p2>";
 	}
 	
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	if ($conn->connect_errno) 
 	{
-		printf("Connect failed: %s\n", $con->connect_error);
+		printf("<p2>Connect failed: %s\n</p2>", $con->connect_error);
 		exit();
 	}
 	
-	if ($result = $conn->query($sql)) 
-	{
-		// $result is an object and can be used to fetch row here
-	}
-	else 
-	{
-		printf("Query failed: %s\n", $conn->error);
-	}
-	
-	
-	
-	$sql = "SELECT gamesPlayed FROM results WHERE idUsers='$idUsers'";
+	$sql = "SELECT gamesPlayed FROM games WHERE idUsers='$idUsers'";
 	$result = $conn->query($sql);
 	
 	if ($result->num_rows > 0) 
@@ -201,18 +187,51 @@ else
 		// output data of each row
 		while($row = $result->fetch_assoc()) 
 		{
-			echo "gamesPlayed: " . $row['gamesPlayed']. "<br>";
+			echo "<p2>gamesPlayed: " . $row['gamesPlayed']. "<br></p2>";
 			$gamesPlayed = $row['gamesPlayed'];
 		}
-	} 
-	
-	if ($gamesPlayed < 0)
+	}
+	else
 	{
-		$sql = "INSERT INTO results(idUsers, gamesPlayed) VALUES ('$idUsers', 0)";
-		printf("why");
+		$gamesPlayed = 0;
 	}
 	
-	$sql = "INSERT INTO results(gamesPlayed) VALUES ($gamesPlayed++)";
+	//create connection
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	
+	//check connection
+	if ($conn->connect_error) 
+	{
+		die("<p2>Connection failed: </p2>" . $conn->connect_error);
+	}
+	
+	//echo "Connected successfully\n";
+	if ($gamesPlayed <= 0)
+	{
+		$gamesPlayed++;
+		
+		$sql = "INSERT INTO games (idUsers, gamesPlayed) VALUES ('$idUsers', '$gamesPlayed')";
+		$result = $conn->query($sql);
+		
+		if (!$result)
+		{
+			echo "<p2>Error: </p2>" . $conn->error;
+		}
+	}
+	else
+	{
+		$gamesPlayed++;
+		
+		//echo $gamesPlayed;
+		$sql = "UPDATE games SET gamesPlayed = '$gamesPlayed' WHERE idUsers ='$idUsers'";
+	}
+	
+	$conn->query($sql);
+	
+	/*if ($conn->query($sql) === FALSE) 
+	{
+		echo "<p2>Error: " . $sql . "<br></p2>" . $conn->error;
+	}*/
 	
 	$conn->close();
 	

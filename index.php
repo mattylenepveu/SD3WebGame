@@ -1,5 +1,5 @@
 <?php
-  require "header.php";
+	require "header.php";
 ?>
 
 <main>
@@ -10,7 +10,7 @@
 		}
 		else
 		{
-			echo '<p>You are logged out!</p>';
+			include("signup.php");
 		}
 	?>
 </main>

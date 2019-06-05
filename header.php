@@ -9,7 +9,7 @@
 		<meta name="description" content="This is an example of a meta description. This will often show up in search results.">
 		<meta name=viewport content="width=device-width, initial-scale=1">
 		<title></title>
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/style"/>
 	</head>
 	<body>
 		<div class="top">
@@ -18,10 +18,6 @@
 					<img src="images/logo.png" alt="logo">
 				</div>
 				<ul class="login-container">
-					<!--<a><li>Home</li></a>
-					<a><li>About</li></a>
-					<a><li>Portfolio</li></a>
-					<a><li>Contact</li></a>-->
 					<?php
 					if (isset($_SESSION['userId']))
 					{
@@ -41,5 +37,4 @@
 				</ul>
 			</div>
 		</div>
-	<!--<a><li "href="signup.php">Signup</a>-->
 			
